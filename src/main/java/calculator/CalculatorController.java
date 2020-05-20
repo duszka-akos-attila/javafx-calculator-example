@@ -45,13 +45,45 @@ public class CalculatorController {
            double result = calculator.calculate(number1, number2, operator);
            display.setText(String.format("%.0f", result));
            operator = "";
-        } else {
+        }
+        else if(operatorPressed.equals("AC")){
+            clearPressed();
+        }
+        else if(operatorPressed.equals(",")){
+            dotPressed();
+        }
+        else if(operatorPressed.equals("\u00B1")){
+            plusorMinusPressed();
+        }
+        else {
             if (! operator.isEmpty()) {
                 return;
             }
             number1 = Double.parseDouble(display.getText());
             operator = operatorPressed;
             startNumber = true;
+        }
+    }
+
+    private void clearPressed() {
+        number1 = 0;
+        display.setText("");
+        startNumber = true;
+        operator = "";
+    }
+
+    private void dotPressed() {
+        if (!display.getText().contains(".")) {
+            display.setText(display.getText() + ".");
+        }
+    }
+
+    private void plusorMinusPressed() {
+        if (display.getText().isEmpty() || Character.isDigit(display.getText().charAt(0))) {
+            display.setText("-" + display.getText());
+            startNumber = false;
+        } else {
+            display.setText(display.getText(1, display.getText().length()));
         }
     }
 
